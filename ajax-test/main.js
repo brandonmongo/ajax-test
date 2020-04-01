@@ -1,17 +1,20 @@
-let xhr = new XMLHttpRequest();
-let data;
+const baseURL = "https://swapi.co/api/";
 
-xhr.onreadystatechange = function() {
-if (this.readyState == 4 && this.status == 200) {
-   data = JSON.parse(this.responseText);  
+function getData(type, cb) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            cb(JSON.parse(this.responseText));
+        }
+    };
+
+    xhr.open("GET", baseURL + type + "/");
+    xhr.send();
 }
-};
 
-xhr.open("GET", "https://swapi.co/api/");
-
-xhr.send();
-
-
-setTimeout(function(){
-    console.log(data);
-}, 500);
+function writeToDocument(type) {
+    getData(type, function(data) {
+        document.getElementById("data").innerHTML = data;
+    });
+}
