@@ -1,9 +1,9 @@
 const baseURL = "https://swapi.co/api/";
 
 function getData(type, cb) {
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             cb(JSON.parse(this.responseText));
         }
@@ -14,7 +14,14 @@ function getData(type, cb) {
 }
 
 function writeToDocument(type) {
-    getData(type, function(data) {
-        document.getElementById("data").innerHTML = data;
+    let el = document.getElementById("data");
+    el.innerHTML = "";
+    getData(type, function (data) {
+        data = data.results;
+
+        data.forEach(function (item) {
+            el.innerHTML += "<p>" + item.name + "</p>" ;
+        });
+
     });
 }
