@@ -3,7 +3,7 @@ const baseURL = "https://swapi.co/api/";
 function getData(type, cb) {
     let xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             cb(JSON.parse(this.responseText));
         }
@@ -16,15 +16,15 @@ function getData(type, cb) {
 function getTableHeaders(obj) {
     let tableHeaders = [];
 
-    Object.keys(obj).forEach(function(key){ 
-        tableHeaders.push(`<tb>${key}</tb>`);
+    Object.keys(obj).forEach(function(key) {
+        tableHeaders.push(`<td>${key}</td>`)
     });
 
-return `<tb>${tableHeaders}</tb>`;
-
+    return `<tr>${tableHeaders}</tr>`;
 }
 
 function writeToDocument(type) {
+    let tableRows = [];
     let el = document.getElementById("data");
     el.innerHTML = "";
 
@@ -33,9 +33,14 @@ function writeToDocument(type) {
         let tableHeaders = getTableHeaders(data[0]);
 
         data.forEach(function(item) {
-            // el.innerHTML += "<p>" + item.name + "</p>";
+            let dataRow = [];
+
+            Object.keys(item).forEach(function(key) {
+                dataRow.push(`<td>${item[key]}</td>`);
+            });
+            tableRows.push(dataRow)
         });
 
-        el.innerHTML = `<table>${tableHeaders}</table>`;
+        el.innerHTML = `<table>${tableHeaders}${tableRows}</table>`;
     });
 }
