@@ -37,12 +37,8 @@ function writeToDocument(type) {
 
             Object.keys(item).forEach(function(key) {
                 let rowData = item[key].toString();
-                let truncatedData = rowData.subString(0, 15);
+                let truncatedData = rowData.substring(0, 15);
                 dataRow.push(`<td>${truncatedData}</td>`)
-               
-                //let rowData = item[key].toString();
-                //let truncatedData = rowData.substring(0, 15);
-                //dataRow.push(`<td>${truncatedData}</td>`);
             });
             tableRows.push(`<tr>${dataRow}</tr>`)
         });
